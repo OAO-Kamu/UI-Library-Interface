@@ -1667,8 +1667,8 @@ local SaveChangesEnabled = true
 function splib:MakeWindow(Configs)
 
     local ToggleIcon = tostring(Configs.ToggleIcon or "rbxassetid://83114982417764")
-    local WTitle     = Configs[1] or Configs.Name or Configs.Title or "SP Lib v2"
-    local WMiniText  = Configs[2] or Configs.SubTitle or Configs.SubName or "by : SP Hub"
+    local WTitle     = Configs[1] or Configs.Name or Configs.Title or ""
+    local WMiniText  = Configs[2] or Configs.SubTitle or Configs.SubName or "By: Dr.我外行我不懂"
 
 
 function splib:MakeWindow(Configs)
