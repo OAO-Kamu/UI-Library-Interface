@@ -1668,7 +1668,7 @@ function splib:MakeWindow(Configs)
 
     local ToggleIcon = tostring(Configs.ToggleIcon or "rbxassetid://83114982417764")
     local WTitle     = Configs[1] or Configs.Name or Configs.Title or ""
-    local WMiniText  = Configs[2] or Configs.SubTitle or Configs.SubName or "By: Dr.我外行我不懂"
+    local WMiniText  = Configs[2] or Configs.SubTitle or Configs.SubName or "By: Q3E4"
 
 
 function splib:MakeWindow(Configs)
@@ -5123,7 +5123,7 @@ end)
 Tab:AddToggle({
     Name = "彩虹边框",
     Flag = "RainbowMainFrame",
-    Default = true Settings.RainbowMainFrameDefault,
+    Default = Settings.RainbowMainFrameDefault,
     Callback = function(enabled)
         rainbowStroke.Transparency = enabled and 0 or 1
     end,
@@ -5159,7 +5159,7 @@ end)
 Tab:AddToggle({
     Name = "彩虹字体",
     Flag = "RainbowTitle",
-    Default = true Settings.RainbowTitleDefault,
+    Default = Settings.RainbowTitleDefault,
     Callback = function(enabled)
         titleRainbowEnabled = enabled
         if not enabled and Title then
@@ -5172,7 +5172,7 @@ Tab:AddToggle({
 Tab:AddToggle({
     Name = "彩虹小标题",
     Flag = "RainbowSubTitle",
-    Default = true Settings.RainbowSubTitleDefault,
+    Default = Settings.RainbowSubTitleDefault,
     Callback = function(enabled)
         subtitleRainbowEnabled = enabled
         if not enabled and SubTitle then
