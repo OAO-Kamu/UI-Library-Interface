@@ -5123,7 +5123,7 @@ end)
 Tab:AddToggle({
     Name = "彩虹边框",
     Flag = "RainbowMainFrame",
-    Default = Settings.RainbowMainFrameDefault,
+    Default = true Settings.RainbowMainFrameDefault,
     Callback = function(enabled)
         rainbowStroke.Transparency = enabled and 0 or 1
     end,
@@ -5159,7 +5159,7 @@ end)
 Tab:AddToggle({
     Name = "彩虹字体",
     Flag = "RainbowTitle",
-    Default = Settings.RainbowTitleDefault,
+    Default = true Settings.RainbowTitleDefault,
     Callback = function(enabled)
         titleRainbowEnabled = enabled
         if not enabled and Title then
@@ -5172,7 +5172,7 @@ Tab:AddToggle({
 Tab:AddToggle({
     Name = "彩虹小标题",
     Flag = "RainbowSubTitle",
-    Default = Settings.RainbowSubTitleDefault,
+    Default = true Settings.RainbowSubTitleDefault,
     Callback = function(enabled)
         subtitleRainbowEnabled = enabled
         if not enabled and SubTitle then
