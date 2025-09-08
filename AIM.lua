@@ -126,8 +126,22 @@ function DeltaUILib:CreateRainbowBorder(parent)
     return borderContainer
 end
 
+-- 修复后的窗口创建函数
 function DeltaUILib:CreateDraggableWindow(title, subtitle)
-    local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    -- 确保 PlayerGui 存在
+    local player = game.Players.LocalPlayer
+    local playerGui = player:FindFirstChild("PlayerGui")
+    if not playerGui then
+        playerGui = Instance.new("PlayerGui")
+        playerGui.Name = "PlayerGui"
+        playerGui.Parent = player
+    end
+    
+    -- 获取服务
+    local TweenService = game:GetService("TweenService")
+    local UserInputService = game:GetService("UserInputService")
+    
+    -- 创建主窗口
     local window = self:CreateElement("Frame", {
         Name = "DeltaUIWindow",
         Size = UDim2.new(0.8, 0, 0.7, 0),
@@ -136,8 +150,11 @@ function DeltaUILib:CreateDraggableWindow(title, subtitle)
         Parent = playerGui
     })
     self:ApplyCorner(window, 0.1)
+    
+    -- 添加彩虹边框
     self:CreateRainbowBorder(window)
     
+    -- 标题栏 (可拖动区域)
     local titleBar = self:CreateElement("Frame", {
         Name = "TitleBar",
         Size = UDim2.new(1, 0, 0.1, 0),
@@ -146,6 +163,7 @@ function DeltaUILib:CreateDraggableWindow(title, subtitle)
     })
     self:ApplyCorner(titleBar, 0.1)
     
+    -- 标题文本
     local titleLabel = self:CreateElement("TextLabel", {
         Name = "Title",
         Size = UDim2.new(0.8, 0, 0.6, 0),
@@ -158,6 +176,7 @@ function DeltaUILib:CreateDraggableWindow(title, subtitle)
         Parent = titleBar
     })
     
+    -- 小标题文本
     local subtitleLabel = self:CreateElement("TextLabel", {
         Name = "Subtitle",
         Size = UDim2.new(0.8, 0, 0.4, 0),
@@ -170,6 +189,7 @@ function DeltaUILib:CreateDraggableWindow(title, subtitle)
         Parent = titleBar
     })
     
+    -- 关闭按钮
     local closeButton = self:CreateElement("TextButton", {
         Name = "CloseButton",
         Size = UDim2.new(0.1, 0, 1, 0),
@@ -182,6 +202,7 @@ function DeltaUILib:CreateDraggableWindow(title, subtitle)
         Parent = titleBar
     })
     
+    -- 内容区域
     local contentFrame = self:CreateElement("Frame", {
         Name = "Content",
         Size = UDim2.new(1, 0, 0.9, 0),
@@ -192,6 +213,7 @@ function DeltaUILib:CreateDraggableWindow(title, subtitle)
     self:ApplyPadding(contentFrame, 15)
     self:ApplyListLayout(contentFrame, 15)
     
+    -- 拖动功能
     local dragging
     local dragInput
     local dragStart
@@ -229,16 +251,18 @@ function DeltaUILib:CreateDraggableWindow(title, subtitle)
         end
     end)
     
-    game:GetService("UserInputService").InputChanged:Connect(function(input)
+    UserInputService.InputChanged:Connect(function(input)
         if input == dragInput and dragging then
             update(input)
         end
     end)
     
+    -- 关闭功能
     closeButton.MouseButton1Click:Connect(function()
         window:Destroy()
     end)
     
+    -- 移动设备优化
     if UserInputService.TouchEnabled then
         titleBar.Size = UDim2.new(1, 0, 0.15, 0)
         titleLabel.TextSize = 24
