@@ -5,20 +5,6 @@ local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local HttpService = game:GetService("HttpService")
 
-function gradient(text, startColor, endColor)
-    local result = ""
-    local length = #text
-    for i = 1, length do
-        local t = (i - 1) / math.max(length - 1, 1)
-        local r = math.floor((startColor.R + (endColor.R - startColor.R) * t) * 255)
-        local g = math.floor((startColor.G + (endColor.G - startColor.G) * t) * 255)
-        local b = math.floor((startColor.B + (endColor.B - startColor.B) * t) * 255)
-        local char = text:sub(i, i)
-        result = result .. "<font color=\"rgb(" .. r ..", " .. g .. ", " .. b .. ")\">" .. char .. "</font>"
-    end
-    return result
-end
-
 local OrionLib = {
         Elements = {},
         ThemeObjects = {},
@@ -569,9 +555,7 @@ function OrionLib:MakeWindow(WindowConfig)
                                 AddThemeObject(MakeElement("Stroke"), "Stroke"),
                                 MakeElement("Corner", 1)
                         }),
-                        local DstName = gradient("" .. game.Players.LocalPlayer.DisplayName .. "", Color3.fromHex("#00FF87"), Color3.fromHex("#60EFFF"))
-                        
-                        AddThemeObject(SetProps(MakeElement("Label", "" .. DstName .. "", WindowConfig.HidePremium and 12 or 11), { -- 减小字体
+                        AddThemeObject(SetProps(MakeElement("Label", game.Players.LocalPlayer.DisplayName, WindowConfig.HidePremium and 12 or 11), { -- 减小字体
                                 Size = UDim2.new(1, -50, 0, 11), -- 调整大小
                                 Position = WindowConfig.HidePremium and UDim2.new(0, 45, 0, 15) or UDim2.new(0, 45, 0, 10), -- 调整位置
                                 Font = Enum.Font.FredokaOne,
