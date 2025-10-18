@@ -555,7 +555,7 @@ function OrionLib:MakeWindow(WindowConfig)
                                 AddThemeObject(MakeElement("Stroke"), "Stroke"),
                                 MakeElement("Corner", 1)
                         }),
-                        AddThemeObject(SetProps(MakeElement("Label", game.Players.LocalPlayer.DisplayName, WindowConfig.HidePremium and 12 or 11), { -- 减小字体
+                        AddThemeObject(SetProps(MakeElement("Label", " " .. game.Players.LocalPlayer.DisplayName, WindowConfig.HidePremium and 12 or 11), { -- 减小字体
                                 Size = UDim2.new(1, -50, 0, 11), -- 调整大小
                                 Position = WindowConfig.HidePremium and UDim2.new(0, 45, 0, 15) or UDim2.new(0, 45, 0, 10), -- 调整位置
                                 Font = Enum.Font.FredokaOne,
