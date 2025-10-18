@@ -81,106 +81,6 @@ task.spawn(function()
         end
 end)
 
--- 创建动态渐变边框函数
-local function CreateAnimatedBorder(parent, thickness, animationSpeed)
-    local borderContainer = Instance.new("Frame")
-    borderContainer.Name = "AnimatedBorder"
-    borderContainer.BackgroundTransparency = 1
-    borderContainer.Size = UDim2.new(1, 0, 1, 0)
-    borderContainer.Position = UDim2.new(0, 0, 0, 0)
-    borderContainer.ZIndex = 0
-    borderContainer.Parent = parent
-    
-    -- 创建四个边的边框
-    local borders = {}
-    
-    -- 上边框
-    borders.top = Instance.new("Frame")
-    borders.top.Name = "TopBorder"
-    borders.top.Size = UDim2.new(1, 0, 0, thickness)
-    borders.top.Position = UDim2.new(0, 0, 0, 0)
-    borders.top.BackgroundTransparency = 1
-    borders.top.ZIndex = 1
-    borders.top.Parent = borderContainer
-    
-    -- 下边框
-    borders.bottom = Instance.new("Frame")
-    borders.bottom.Name = "BottomBorder"
-    borders.bottom.Size = UDim2.new(1, 0, 0, thickness)
-    borders.bottom.Position = UDim2.new(0, 0, 1, -thickness)
-    borders.bottom.BackgroundTransparency = 1
-    borders.bottom.ZIndex = 1
-    borders.bottom.Parent = borderContainer
-    
-    -- 左边框
-    borders.left = Instance.new("Frame")
-    borders.left.Name = "LeftBorder"
-    borders.left.Size = UDim2.new(0, thickness, 1, 0)
-    borders.left.Position = UDim2.new(0, 0, 0, 0)
-    borders.left.BackgroundTransparency = 1
-    borders.left.ZIndex = 1
-    borders.left.Parent = borderContainer
-    
-    -- 右边框
-    borders.right = Instance.new("Frame")
-    borders.right.Name = "RightBorder"
-    borders.right.Size = UDim2.new(0, thickness, 1, 0)
-    borders.right.Position = UDim2.new(1, -thickness, 0, 0)
-    borders.right.BackgroundTransparency = 1
-    borders.right.ZIndex = 1
-    borders.right.Parent = borderContainer
-    
-    -- 为每个边框创建渐变和动画
-    for _, border in pairs(borders) do
-        -- 创建UIGradient
-        local gradient = Instance.new("UIGradient")
-        gradient.Rotation = 0
-        gradient.Transparency = NumberSequence.new({
-            NumberSequenceKeypoint.new(0, 0.3),
-            NumberSequenceKeypoint.new(0.5, 0),
-            NumberSequenceKeypoint.new(1, 0.3)
-        })
-        
-        -- 创建黑白颜色序列
-        local colorSequence = ColorSequence.new({
-            ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),  -- 白色
-            ColorSequenceKeypoint.new(0.5, Color3.fromRGB(128, 128, 128)), -- 灰色
-            ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))   -- 白色
-        })
-        
-        gradient.Color = colorSequence
-        gradient.Parent = border
-        
-        -- 创建圆角
-        local corner = Instance.new("UICorner")
-        corner.CornerRadius = UDim.new(0, 2)
-        corner.Parent = border
-    end
-    
-    -- 动画循环
-    local connection
-    local animationTime = 0
-    
-    local function animateBorder()
-        animationTime = animationTime + (1/60)
-        local offset = (animationTime * animationSpeed) % 1
-        
-        for _, border in pairs(borders) do
-            local gradient = border:FindFirstChildOfClass("UIGradient")
-            if gradient then
-                gradient.Offset = Vector2.new(-offset, 0)
-            end
-        end
-    end
-    
-    connection = RunService.RenderStepped:Connect(animateBorder)
-    
-    -- 存储连接以便后续清理
-    table.insert(OrionLib.Connections, connection)
-    
-    return borderContainer
-end
-
 local function MakeDraggable(DragPoint, Main)
         pcall(function()
                 local Dragging, DragInput, MousePos, FramePos = false
@@ -681,22 +581,10 @@ function OrionLib:MakeWindow(WindowConfig)
                 Position = UDim2.new(0, 0, 1, -1)
         }), "Stroke")
 
-        -- 创建主窗口容器，用于容纳动态边框
-        local MainWindowContainer = Create("Frame", {
-            Parent = Orion,
-            Position = UDim2.new(0.5, -250, 0.5, -140),
-            Size = UDim2.new(0, 500, 0, 280),
-            BackgroundTransparency = 1,
-            ClipsDescendants = true
-        })
-
-        -- 添加动态渐变边框到主窗口容器
-        CreateAnimatedBorder(MainWindowContainer, 3, 2) -- 边框厚度3，动画速度2
-
         local MainWindow = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 8), { -- 减小圆角
-                Parent = MainWindowContainer,
-                Size = UDim2.new(1, -6, 1, -6), -- 为边框留出空间
-                Position = UDim2.new(0, 3, 0, 3), -- 居中显示
+                Parent = Orion,
+                Position = UDim2.new(0.5, -250, 0.5, -140), -- 调整位置和大小
+                Size = UDim2.new(0, 500, 0, 280), -- 减小窗口大小
                 ClipsDescendants = true
         }), {
                 SetChildren(SetProps(MakeElement("TFrame"), {
@@ -722,9 +610,6 @@ function OrionLib:MakeWindow(WindowConfig)
                 WindowStuff
         }), "Main")
 
-        -- 更新拖动功能以拖动整个容器
-        MakeDraggable(DragPoint, MainWindowContainer)
-
         if WindowConfig.ShowIcon then
                 WindowName.Position = UDim2.new(0, 40, 0, -19) -- 调整位置
                 local WindowIcon = SetProps(MakeElement("Image", WindowConfig.Icon), {
@@ -733,6 +618,8 @@ function OrionLib:MakeWindow(WindowConfig)
                 })
                 WindowIcon.Parent = MainWindow.TopBar
         end        
+
+        MakeDraggable(DragPoint, MainWindow)
 
     local MobileReopenButton = SetChildren(SetProps(MakeElement("Button"), {
                 Parent = Orion,
@@ -751,7 +638,7 @@ function OrionLib:MakeWindow(WindowConfig)
         })
 
         AddConnection(CloseBtn.MouseButton1Up, function() --关闭 UI
-                MainWindowContainer.Visible = false
+                MainWindow.Visible = false
                 MobileReopenButton.Visible = true
                 UIHidden = true
                 WindowConfig.CloseCallback()
@@ -759,19 +646,19 @@ function OrionLib:MakeWindow(WindowConfig)
 
         AddConnection(UserInputService.InputBegan, function(Input)
                 if Input.KeyCode == Enum.KeyCode.LeftControl and UIHidden == true then
-                        MainWindowContainer.Visible = true
+                        MainWindow.Visible = true
                         MobileReopenButton.Visible = false
                 end
         end)
 
         AddConnection(MobileReopenButton.Activated, function()
-                MainWindowContainer.Visible = true
+                MainWindow.Visible = true
                 MobileReopenButton.Visible = false
         end)
 
         AddConnection(MinimizeBtn.MouseButton1Up, function()
                 if Minimized then
-                        TweenService:Create(MainWindowContainer, TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, 500, 0, 280)}):Play() -- 调整大小
+                        TweenService:Create(MainWindow, TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, 500, 0, 280)}):Play() -- 调整大小
                         MinimizeBtn.Ico.Image = "rbxassetid://89547331668158"
                         wait(.02)
                         MainWindow.ClipsDescendants = false
@@ -782,7 +669,7 @@ function OrionLib:MakeWindow(WindowConfig)
                         WindowTopBarLine.Visible = false
                         MinimizeBtn.Ico.Image = "rbxassetid://77359780859993"
 
-                        TweenService:Create(MainWindowContainer, TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, WindowName.TextBounds.X + 120, 0, 40)}):Play() -- 调整大小
+                        TweenService:Create(MainWindow, TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, WindowName.TextBounds.X + 120, 0, 40)}):Play() -- 调整大小
                         wait(0.1)
                         WindowStuff.Visible = false        
                 end
@@ -790,7 +677,7 @@ function OrionLib:MakeWindow(WindowConfig)
         end)
 
         local function LoadSequence()
-                MainWindowContainer.Visible = false
+                MainWindow.Visible = false
                 local LoadSequenceLogo = SetProps(MakeElement("Image", WindowConfig.IntroIcon), {
                         Parent = Orion,
                         AnchorPoint = Vector2.new(0.5, 0.5),
@@ -817,7 +704,7 @@ function OrionLib:MakeWindow(WindowConfig)
                 TweenService:Create(LoadSequenceText, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 0}):Play()
                 wait(2)
                 TweenService:Create(LoadSequenceText, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 1}):Play()
-                MainWindowContainer.Visible = true
+                MainWindow.Visible = true
                 LoadSequenceLogo:Destroy()
                 LoadSequenceText:Destroy()
         end 
