@@ -12,12 +12,12 @@ local OrionLib = {
         Flags = {},
         Themes = {
                 Default = {
-                        Main = Color3.fromRGB(0, 0, 0),--黑色主要区域
-                        Second = Color3.fromRGB(0, 0, 0),--红色选项栏和功能
-                        Stroke = Color3.fromRGB(192, 192, 192),--绿色周围边框
-                        Divider = Color3.fromRGB(255, 255, 255),--玩家蓝色圈圈颜色
-                        Text = Color3.fromRGB(255, 255, 255),--字颜色
-                        TextDark = Color3.fromRGB(0, 255, 0)--不知道
+                        Main = Color3.fromRGB(0, 0, 0),
+                        Second = Color3.fromRGB(0, 0, 0),
+                        Stroke = Color3.fromRGB(192, 192, 192),
+                        Divider = Color3.fromRGB(255, 255, 255),
+                        Text = Color3.fromRGB(255, 255, 255),
+                        TextDark = Color3.fromRGB(0, 255, 0)
                 }
         },
         SelectedTheme = "Default",
@@ -240,7 +240,7 @@ end
 
 CreateElement("Corner", function(Scale, Offset)
         local Corner = Create("UICorner", {
-                CornerRadius = UDim.new(Scale or 0, Offset or 6) -- 减小圆角
+                CornerRadius = UDim.new(Scale or 0, Offset or 6) 
         })
         return Corner
 end)
@@ -256,14 +256,14 @@ end)
 CreateElement("List", function(Scale, Offset)
         local List = Create("UIListLayout", {
                 SortOrder = Enum.SortOrder.LayoutOrder,
-                Padding = UDim.new(Scale or 0, Offset or 2) -- 减小间距
+                Padding = UDim.new(Scale or 0, Offset or 2) 
         })
         return List
 end)
 
 CreateElement("Padding", function(Bottom, Left, Right, Top)
         local Padding = Create("UIPadding", {
-                PaddingBottom = UDim.new(0, Bottom or 3), -- 减小内边距
+                PaddingBottom = UDim.new(0, Bottom or 3), 
                 PaddingLeft = UDim.new(0, Left or 3),
                 PaddingRight = UDim.new(0, Right or 3),
                 PaddingTop = UDim.new(0, Top or 3)
@@ -348,7 +348,7 @@ CreateElement("Label", function(Text, TextSize, Transparency)
                 Text = Text or "",
                 TextColor3 = Color3.fromRGB(240, 240, 240),
                 TextTransparency = Transparency or 0,
-                TextSize = TextSize or 13, -- 减小字体大小
+                TextSize = TextSize or 13, 
                 Font = Enum.Font.FredokaOne,
                 RichText = true,
                 BackgroundTransparency = 1,
@@ -362,11 +362,11 @@ local NotificationHolder = SetProps(SetChildren(MakeElement("TFrame"), {
                 HorizontalAlignment = Enum.HorizontalAlignment.Center,
                 SortOrder = Enum.SortOrder.LayoutOrder,
                 VerticalAlignment = Enum.VerticalAlignment.Bottom,
-                Padding = UDim.new(0, 3) -- 减小通知间距
+                Padding = UDim.new(0, 3) 
         })
 }), {
-        Position = UDim2.new(1, -20, 1, -20), -- 调整位置
-        Size = UDim2.new(0, 250, 1, -20), -- 减小通知宽度
+        Position = UDim2.new(1, -20, 1, -20), 
+        Size = UDim2.new(0, 250, 1, -20), 
         AnchorPoint = Vector2.new(1, 1),
         Parent = Orion
 })
@@ -384,29 +384,29 @@ function OrionLib:MakeNotification(NotificationConfig)
                         Parent = NotificationHolder
                 })
 
-                local NotificationFrame = SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(25, 25, 25), 0, 8), { -- 减小圆角
+                local NotificationFrame = SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(25, 25, 25), 0, 8), { 
                         Parent = NotificationParent, 
                         Size = UDim2.new(1, 0, 0, 0),
-                        Position = UDim2.new(1, -45, 0, 0), -- 调整位置
+                        Position = UDim2.new(1, -45, 0, 0), 
                         BackgroundTransparency = 0.4,
                         AutomaticSize = Enum.AutomaticSize.Y
                 }), {
                         MakeElement("Stroke", Color3.fromRGB(93, 93, 93), 1.2),
-                        MakeElement("Padding", 8, 8, 8, 8), -- 减小内边距
+                        MakeElement("Padding", 8, 8, 8, 8), 
                         SetProps(MakeElement("Image", NotificationConfig.Image), {
-                                Size = UDim2.new(0, 16, 0, 16), -- 减小图标大小
+                                Size = UDim2.new(0, 16, 0, 16), 
                                 ImageColor3 = Color3.fromRGB(240, 240, 240),
                                 Name = "Icon"
                         }),
-                        SetProps(MakeElement("Label", NotificationConfig.Name, 13), { -- 减小字体
-                                Size = UDim2.new(1, -26, 0, 16), -- 调整大小
+                        SetProps(MakeElement("Label", NotificationConfig.Name, 13), { 
+                                Size = UDim2.new(1, -26, 0, 16), 
                                 Position = UDim2.new(0, 26, 0, 0),
                                 Font = Enum.Font.FredokaOne,
                                 Name = "Title"
                         }),
-                        SetProps(MakeElement("Label", NotificationConfig.Content, 12), { -- 减小字体
+                        SetProps(MakeElement("Label", NotificationConfig.Content, 12), { 
                                 Size = UDim2.new(1, 0, 0, 0),
-                                Position = UDim2.new(0, 0, 0, 20), -- 调整位置
+                                Position = UDim2.new(0, 0, 0, 20), 
                                 Font = Enum.Font.FredokaOne,
                                 Name = "Content",
                                 AutomaticSize = Enum.AutomaticSize.Y,
@@ -451,19 +451,19 @@ function OrionLib:MakeWindow(WindowConfig)
         local UIHidden = false
 
         WindowConfig = WindowConfig or {}
-        WindowConfig.Name = WindowConfig.Name or "Orion Library"
+        WindowConfig.Name = WindowConfig.Name or ""
         WindowConfig.ConfigFolder = WindowConfig.ConfigFolder or WindowConfig.Name
         WindowConfig.SaveConfig = WindowConfig.SaveConfig or false
         WindowConfig.HidePremium = WindowConfig.HidePremium or false
         if WindowConfig.IntroEnabled == nil then
                 WindowConfig.IntroEnabled = true
         end
-        WindowConfig.IntroToggleIcon = WindowConfig.IntroToggleIcon or "rbxassetid://4483345998"
-        WindowConfig.IntroText = WindowConfig.IntroText or "缝合脚本中心 [V.1.6]"
+        WindowConfig.IntroToggleIcon = WindowConfig.IntroToggleIcon or "rbxassetid://98643965033885"
+        WindowConfig.IntroText = WindowConfig.IntroText or ""
         WindowConfig.CloseCallback = WindowConfig.CloseCallback or function() end
-        WindowConfig.ShowIcon = WindowConfig.ShowIcon or false
-        WindowConfig.Icon = WindowConfig.Icon or "rbxassetid://4483345998"
-        WindowConfig.IntroIcon = WindowConfig.IntroIcon or "rbxassetid://4483345998"
+        WindowConfig.ShowIcon = WindowConfig.ShowIcon or true
+        WindowConfig.Icon = WindowConfig.Icon or "rbxassetid://98643965033885"
+        WindowConfig.IntroIcon = WindowConfig.IntroIcon or "rbxassetid://98643965033885"
         OrionLib.Folder = WindowConfig.ConfigFolder
         OrionLib.SaveCfg = WindowConfig.SaveConfig
 
@@ -473,15 +473,15 @@ function OrionLib:MakeWindow(WindowConfig)
                 end        
         end
 
-        local TabHolder = AddThemeObject(SetChildren(SetProps(MakeElement("ScrollFrame", Color3.fromRGB(255, 255, 255), 3), { -- 减小滚动条宽度
-                Size = UDim2.new(1, 0, 1, -40) -- 调整高度
+        local TabHolder = AddThemeObject(SetChildren(SetProps(MakeElement("ScrollFrame", Color3.fromRGB(255, 255, 255), 3), { 
+                Size = UDim2.new(1, 0, 1, -40) 
         }), {
                 MakeElement("List"),
-                MakeElement("Padding", 6, 0, 0, 6) -- 减小内边距
+                MakeElement("Padding", 6, 0, 0, 6) 
         }), "Divider")
 
         AddConnection(TabHolder.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
-                TabHolder.CanvasSize = UDim2.new(0, 0, 0, TabHolder.UIListLayout.AbsoluteContentSize.Y + 12) -- 调整画布大小
+                TabHolder.CanvasSize = UDim2.new(0, 0, 0, TabHolder.UIListLayout.AbsoluteContentSize.Y + 12) 
         end)
 
         local CloseBtn = SetChildren(SetProps(MakeElement("Button"), {
@@ -490,8 +490,8 @@ function OrionLib:MakeWindow(WindowConfig)
                 BackgroundTransparency = 1
         }), {
                 AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://96669691935808"), {
-                        Position = UDim2.new(0, 7, 0, 5), -- 调整位置
-                        Size = UDim2.new(0, 14, 0, 14) -- 减小图标大小
+                        Position = UDim2.new(0, 7, 0, 5), 
+                        Size = UDim2.new(0, 14, 0, 14) 
                 }), "Text")
         })
 
@@ -500,27 +500,27 @@ function OrionLib:MakeWindow(WindowConfig)
                 BackgroundTransparency = 1
         }), {
                 AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://89547331668158"), {
-                        Position = UDim2.new(0, 7, 0, 5), -- 调整位置
-                        Size = UDim2.new(0, 14, 0, 14), -- 减小图标大小
+                        Position = UDim2.new(0, 7, 0, 5), 
+                        Size = UDim2.new(0, 14, 0, 14), 
                         Name = "Ico"
                 }), "Text")
         })
 
         local DragPoint = SetProps(MakeElement("TFrame"), {
-                Size = UDim2.new(1, 0, 0, 40) -- 减小拖动区域高度
+                Size = UDim2.new(1, 0, 0, 40) 
         })
 
-        local WindowStuff = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 8), { -- 减小圆角
-                Size = UDim2.new(0, 120, 1, -40), -- 减小宽度和调整高度
-                Position = UDim2.new(0, 0, 0, 40) -- 调整位置
+        local WindowStuff = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 8), { 
+                Size = UDim2.new(0, 120, 1, -40), 
+                Position = UDim2.new(0, 0, 0, 40) 
         }), {
                 AddThemeObject(SetProps(MakeElement("Frame"), {
-                        Size = UDim2.new(1, 0, 0, 8), -- 减小高度
+                        Size = UDim2.new(1, 0, 0, 8), 
                         Position = UDim2.new(0, 0, 0, 0)
                 }), "Second"), 
                 AddThemeObject(SetProps(MakeElement("Frame"), {
-                        Size = UDim2.new(0, 8, 1, 0), -- 减小宽度
-                        Position = UDim2.new(1, -8, 0, 0) -- 调整位置
+                        Size = UDim2.new(0, 8, 1, 0), 
+                        Position = UDim2.new(1, -8, 0, 0) 
                 }), "Second"), 
                 AddThemeObject(SetProps(MakeElement("Frame"), {
                         Size = UDim2.new(0, 1, 1, 0),
@@ -528,16 +528,16 @@ function OrionLib:MakeWindow(WindowConfig)
                 }), "Stroke"), 
                 TabHolder,
                 SetChildren(SetProps(MakeElement("TFrame"), {
-                        Size = UDim2.new(1, 0, 0, 40), -- 减小高度
-                        Position = UDim2.new(0, 0, 1, -40) -- 调整位置
+                        Size = UDim2.new(1, 0, 0, 40), 
+                        Position = UDim2.new(0, 0, 1, -40) 
                 }), {
                         AddThemeObject(SetProps(MakeElement("Frame"), {
                                 Size = UDim2.new(1, 0, 0, 1)
                         }), "Stroke"), 
                         AddThemeObject(SetChildren(SetProps(MakeElement("Frame"), {
                                 AnchorPoint = Vector2.new(0, 0.5),
-                                Size = UDim2.new(0, 28, 0, 28), -- 减小头像大小
-                                Position = UDim2.new(0, 8, 0.5, 0) -- 调整位置
+                                Size = UDim2.new(0, 28, 0, 28), 
+                                Position = UDim2.new(0, 8, 0.5, 0) 
                         }), {
                                 SetProps(MakeElement("Image", "https://www.roblox.com/headshot-thumbnail/image?userId=".. LocalPlayer.UserId .."&width=420&height=420&format=png"), {
                                         Size = UDim2.new(1, 0, 1, 0)
@@ -549,15 +549,15 @@ function OrionLib:MakeWindow(WindowConfig)
                         }), "Divider"),
                         SetChildren(SetProps(MakeElement("TFrame"), {
                                 AnchorPoint = Vector2.new(0, 0.5),
-                                Size = UDim2.new(0, 28, 0, 28), -- 减小边框大小
-                                Position = UDim2.new(0, 8, 0.5, 0) -- 调整位置
+                                Size = UDim2.new(0, 28, 0, 28), 
+                                Position = UDim2.new(0, 8, 0.5, 0) 
                         }), {
                                 AddThemeObject(MakeElement("Stroke"), "Stroke"),
                                 MakeElement("Corner", 1)
                         }),
-                        AddThemeObject(SetProps(MakeElement("Label", " " .. game.Players.LocalPlayer.DisplayName, WindowConfig.HidePremium and 12 or 11), { -- 减小字体
-                                Size = UDim2.new(1, -50, 0, 11), -- 调整大小
-                                Position = WindowConfig.HidePremium and UDim2.new(0, 45, 0, 15) or UDim2.new(0, 45, 0, 10), -- 调整位置
+                        AddThemeObject(SetProps(MakeElement("Label", " " .. game.Players.LocalPlayer.DisplayName, WindowConfig.HidePremium and 12 or 11), { 
+                                Size = UDim2.new(1, -50, 0, 11), 
+                                Position = WindowConfig.HidePremium and UDim2.new(0, 45, 0, 15) or UDim2.new(0, 45, 0, 10), 
                                 Font = Enum.Font.FredokaOne,
                                 ClipsDescendants = true
                         }), "Text"),
