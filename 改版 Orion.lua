@@ -1,3 +1,5 @@
+--616
+
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
@@ -613,8 +615,8 @@ function OrionLib:MakeWindow(WindowConfig)
         if WindowConfig.ShowIcon then
                 WindowName.Position = UDim2.new(0, 40, 0, -19) -- 调整位置
                 local WindowIcon = SetProps(MakeElement("Image", WindowConfig.Icon), {
-                        Size = UDim2.new(0, 30, 0, 30), -- 减小图标大小
-                        Position = UDim2.new(0, 20, 0, 12) -- 调整位置
+                        Size = UDim2.new(0, 40, 0, 40), -- 减小图标大小
+                        Position = UDim2.new(0, 25, 0, 16) -- 调整位置
                 })
                 WindowIcon.Parent = MainWindow.TopBar
         end        
