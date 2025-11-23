@@ -6,7 +6,50 @@ local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local HttpService = game:GetService("HttpService")
+local OrionLib = {
+    Elements = {},
+    ThemeObjects = {},
+    Connections = {},
+    Flags = {},
+    Themes = {
+        Default = {
+            Main = Color3.fromRGB(0, 0, 0),
+            Second = Color3.fromRGB(0, 0, 0),
+            Stroke = Color3.fromRGB(192, 192, 192),
+            Divider = Color3.fromRGB(255, 255, 255),
+            Text = Color3.fromRGB(255, 255, 255),
+            TextDark = Color3.fromRGB(0, 255, 0)
+        },
+        Light = {
+            Main = Color3.fromRGB(255, 255, 255),
+            Second = Color3.fromRGB(255, 255, 255),
+            Stroke = Color3.fromRGB(248, 248, 248),
+            Divider = Color3.fromRGB(0, 0, 0),
+            Text = Color3.fromRGB(255, 102, 255),
+            TextDark = Color3.fromRGB(0, 255, 0)
+        }
+    },
+    SelectedTheme = "Default",
+    Folder = nil,
+    SaveCfg = false
+}
+-- 随机选择主题的函数
+function chooseRandomTheme()
+    if math.random(1, 2) == 1 then
+        return "Default"
+    else
+        return "Light"
+    end
+end
 
+-- 每次运行都随机选择主题
+OrionLib.SelectedTheme = chooseRandomTheme()
+
+-- 显示结果
+print("=== 主题信息 ===")
+print("当前主题:", OrionLib.SelectedTheme)
+print("主题颜色设置:", OrionLib.Themes[OrionLib.SelectedTheme])
+--[[
 local OrionLib = {
         Elements = {},
         ThemeObjects = {},
@@ -21,12 +64,20 @@ local OrionLib = {
                         Text = Color3.fromRGB(255, 255, 255),
                         TextDark = Color3.fromRGB(0, 255, 0)
                 }
+                Light = {
+                        Main = Color3.fromRGB(255, 255, 255),
+                        Second = Color3.fromRGB(255, 255, 255),
+                        Stroke = Color3.fromRGB(248, 248, 248),
+                        Divider = Color3.fromRGB(0, 0, 0),
+                        Text = Color3.fromRGB(255, 102, 255),
+                        TextDark = Color3.fromRGB(0, 255, 0)
+                }
         },
-        SelectedTheme = "Default",
+        SelectedTheme = "Default" or "Light",
         Folder = nil,
         SaveCfg = false
 }
-
+]]
 --Feather Icons https://github.com/evoincorp/lucideblox/tree/master/src/modules/util - Created by 7kayoh
 local Icons = {}
 
