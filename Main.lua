@@ -299,7 +299,6 @@ function UILibrary:CreateWindow(config)
     roundify(Logo, 8)
     addStroke(Logo, Color3.fromRGB(180, 140, 255), 2)
 
-
 	local TitleLabel = create("TextLabel", {
 		Name = "Title",
 		Size = UDim2.new(1, -150, 1, 0),
@@ -457,33 +456,30 @@ function UILibrary:CreateWindow(config)
 	})
 
 	--// Toggle Button
-    local toggleSize = isMobile and 50 or 55
-    local toggleOffset = isMobile and 15 or 20
-    local ToggleBtn = create("ImageButton", {
-        Name = "ToggleBtn",
-        Size = UDim2.new(0, toggleSize, 0, toggleSize),
-        Position = UDim2.new(1, -toggleSize - toggleOffset, 1, -toggleSize - toggleOffset),
-        BackgroundColor3 = theme.Accent,
-        Image = "rbxassetid://124631853741481", 
-        ScaleType = Enum.ScaleType.Fit,
-        ImageColor3 = Color3.fromRGB(255, 255, 255),
-        AutoButtonColor = false,
-        Parent = ScreenGui
-    })
-    roundify(ToggleBtn, 12)
-    addStroke(ToggleBtn, Color3.fromRGB(180, 140, 255), 2)
-    addGradient(ToggleBtn, {theme.Accent, theme.AccentBlue}, 45)
+	local toggleSize = isMobile and 50 or 55
+	local toggleOffset = isMobile and 15 or 20
+	local ToggleBtn = create("TextButton", {
+		Name = "ToggleBtn",
+		Size = UDim2.new(0, toggleSize, 0, toggleSize),
+		Position = UDim2.new(1, -toggleSize - toggleOffset, 1, -toggleSize - toggleOffset),
+		BackgroundColor3 = theme.Accent,
+		Text = "",
+		AutoButtonColor = false,
+		Parent = ScreenGui
+	})
+	roundify(ToggleBtn, 12)
+	addStroke(ToggleBtn, Color3.fromRGB(180, 140, 255), 2)
+	addGradient(ToggleBtn, {theme.Accent, theme.AccentBlue}, 45)
 
-    create("TextLabel", {
-        Size = UDim2.new(1, 0, 1, 0),
-        BackgroundTransparency = 0.2,
-        Text = "开/关",
-        TextColor3 = Color3.fromRGB(255, 255, 255),
-        Font = Enum.Font.GothamBold,
-        TextSize = isMobile and 24 or 28,
-        Parent = ToggleBtn
-    })
-
+	create("TextLabel", {
+		Size = UDim2.new(1, 0, 1, 0),
+		BackgroundTransparency = 1,
+		Text = "开/关",
+		TextColor3 = Color3.fromRGB(255, 255, 255),
+		Font = Enum.Font.GothamBold,
+		TextSize = isMobile and 24 or 28,
+		Parent = ToggleBtn
+	})
 
 	local function toggleUI()
 		open = not open
