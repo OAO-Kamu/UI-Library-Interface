@@ -464,7 +464,7 @@ function UILibrary:CreateWindow(config)
         Size = UDim2.new(0, toggleSize, 0, toggleSize),
         Position = UDim2.new(1, -toggleSize - toggleOffset, 1, -toggleSize - toggleOffset),
         BackgroundColor3 = theme.Accent,
-        Image = "rbxassetid://124631853741481", -- 替换为你的开关按钮图片ID
+        Image = "rbxassetid://124631853741481", 
         ScaleType = Enum.ScaleType.Fit,
         ImageColor3 = Color3.fromRGB(255, 255, 255),
         AutoButtonColor = false,
@@ -476,7 +476,7 @@ function UILibrary:CreateWindow(config)
 
     create("TextLabel", {
         Size = UDim2.new(1, 0, 1, 0),
-        BackgroundTransparency = 1,
+        BackgroundTransparency = 0,
         Text = "开/关",
         TextColor3 = Color3.fromRGB(255, 255, 255),
         Font = Enum.Font.GothamBold,
